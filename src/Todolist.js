@@ -1,38 +1,34 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import Tasks from './Tasks';
 import Input from './Input';
 
-class Todolist extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            tasks: []
-        }
-        this.addTask = this.addTask.bind(this);
-    }
+function Todolist () {
+    const [tasks, setTasks] = useState(["Make a todo list"]);
 
-    addTask(e) {
+    const addTask = (e, newTask) => {
         e.preventDefault();
-        let task = e.target.value;
-        let addedArr = [...this.state.tasks, task];
-        console.log(task);
-        console.log(addedArr);
-        this.setState((prevState, props) => {
-            return {
-                tasks: addedArr
+        setTasks([...tasks, newTask]);
+    }
+
+    const removeTask = index => {
+        let newTaskArray = tasks.filter((task, i) => {
+            if (index === i) {
+                return false
+            } else {
+                return true
             }
-        })
+        });
+        setTasks(newTaskArray);
+        // The below line is the same as the above lines
+        // setTasks(tasks.filter((task, i) => index !== i));
     }
 
-    render() {
-        return (
-            <div>
-                <Input onClick={this.addTask} />
-                <Tasks tasks={[this.state.tasks]}/>
-            </div>
-        )
-    }
-
+    return (
+        <div>
+            <Input onClick={addTask} />
+            <Tasks tasks={tasks} deleteTaskHandler={removeTask} />
+        </div>
+    )
 }
 
 export default Todolist;

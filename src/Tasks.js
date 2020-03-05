@@ -1,19 +1,13 @@
 import React, {Component} from 'react';
 
-class Tasks extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <ul>
-                {this.props.tasks.map(task => (
-                    <li>{task}</li>
-                ))}
-            </ul>
-        )
-    }
+function Tasks(props) {
+    return (
+        <ul>
+            {props.tasks.map((task, i) => (
+                <li key={`task-${i}`} onClick={() => props.deleteTaskHandler(i)}>{task}</li>
+            ))}
+        </ul>
+    )
 }
 
 export default Tasks;
